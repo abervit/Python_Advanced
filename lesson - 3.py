@@ -1,38 +1,3 @@
-import time
-
-
-def decorator_func(orig_func):
-    import time
-    """passing *args and **kwargs to our function, allows us to get arguments from our main function"""
-
-    def wrapper_func(*args, **kwargs):  # args and kwargs allow us to accept an arbitary number of positional or
-        # keyword arguments
-        print('********')
-        t1 = time.time()
-        result = orig_func(*args, **kwargs)
-        print('********')
-        t2 = time.time() - t1
-        print('{} run in: {} sec'.format(orig_func.__name__, t2))
-        return result
-
-    return wrapper_func
-
-
-# * args - unpack our values (as default) - def info('New York', 'City')
-# ** kwargs - unpack our key values - def info(city = 'New York', country = 'Belgium')
-import time
-
-
-@decorator_func
-def display(car, year):  # we pass 2 arguments - car`s model and its year
-    for i in range(5):
-        print('Our car ', car, ' was made in ', year)
-
-
-display('BMW', 1995)
-
-
-
 """"Stack Class"""
 stack = []  # we start with an empty stack list for our numbers
 
@@ -75,8 +40,6 @@ stac.add(33)
 stac.pop()
 print(stac)
 
-
-
 """Now we will create a Queue Class"""
 queue = []
 
@@ -113,3 +76,62 @@ queue.add(4)
 print(queue)
 queue.pop()
 print(queue)
+
+a = [1, 2, 3, 4, 5, 6]
+
+for i in range(len(a) - 1, 0, -1):
+    print(i)
+
+from datetime import datetime
+
+
+def decorat(arg):
+    def outer(func):
+        def wrapper(*args, **kwargs):
+            start = datetime.now()
+            result = func(*args, **kwargs)
+            for i in range(arg):
+                print(i)
+            print(datetime.now() - start)
+            return result
+
+        return wrapper
+
+    return outer
+
+
+@decorat(2)
+def word():
+    print('Let`s begin!!!')
+    return word
+
+word()
+
+
+import math
+
+class CompNum(object):
+    """Creation of our complex number"""
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+
+    def __add__(self, other):
+        return CompNum(self.a + other.a, self.b + other.b)
+
+    def __sub__(self, other):
+        return CompNum(self.a - other.a, self.b - other.b)
+
+    def __mul__(self, other):
+        return CompNum(self.a * other.a, self.b * other.b)
+
+    def __div__(self, other):
+        return CompNum(self.a / other.a, self.b / other.b)
+
+
+a = CompNum(0,3)
+b = CompNum(1,2)
+print(a+b)
+print(a-b)
+print(a*b)
+print(a/b)
